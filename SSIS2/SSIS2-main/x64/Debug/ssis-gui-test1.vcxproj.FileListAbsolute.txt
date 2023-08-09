@@ -1,0 +1,6 @@
+C:\dev\CPP\ssis-gui-test1\ssis-gui-test1\x64\Debug\ssis-gui-test1.vcxproj.AssemblyReference.cache
+C:\dev\CPP\ssis-gui-test1\ssis-gui-test1\x64\Debug\ssis-gui-test1.vcxproj.SuggestedBindingRedirects.cache
+C:\dev\CPP\ssis-gui-test1\ssis-gui-test1\x64\Debug\ssisguitest1.MainForm.resources
+C:\dev\CPP\ssis-gui-test1\ssis-gui-test1\x64\Debug\ssis-gui-test1.vcxproj.GenerateResource.cache
+C:\dev\CPP\ssis-gui-test1\ssis-gui-test1\x64\Debug\ssis-gui-test1.vcxproj.CopyComplete
+C:\dev\CPP\ssis-gui-test1\ssis-gui-test1\x64\Debug\ssisguitest1.CourseCRUDL.resources
