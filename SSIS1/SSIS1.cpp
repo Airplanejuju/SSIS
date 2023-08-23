@@ -354,6 +354,98 @@ void searchCourse() {
     }
 }
 
+//delete course
+void deleteCourse() {
+    system("cls");
+    std::cout << "Delete Course" << std::endl;
+    std::cout << "-------------" << std::endl;
+
+    std::string courseName;
+    std::cout << "Enter Course Name: ";
+    std::getline(std::cin, courseName);
+
+    auto it = std::find_if(courses.begin(), courses.end(), [&](const Course& course) {
+        return course.name == courseName;
+        });
+
+    if (it != courses.end()) {
+        std::cout << "\nCourse Found:" << std::endl;
+        std::cout << "\nCourse Name: " << it->name << std::endl;
+        std::cout << "Number of Students: " << it->numStudents << std::endl;
+
+        char toDel;
+
+        std::cout << "\nDelete Course? (Y / N) :" << std::endl;
+        std::cin >> toDel;
+
+        if (toDel == 'Y' || toDel == 'y')
+        {
+            //delete course name and num of students
+            auto it = std::find_if(courses.begin(), courses.end(), [&](const Course& course)
+                {
+                    return course.name == courseName;
+                });
+
+            if (it != courses.end()) {
+                const std::string course = it->name;
+                courses.erase(it);
+            }
+
+            //delete students with that course 
+            auto it2 = std::find_if(students.begin(), students.end(), [&](const Student& student)
+                {
+                    return student.course == courseName;
+                });
+
+            if (it2 != students.end()) {
+                const std::string course = it2->course;
+                students.erase(it2);
+
+                for (auto& courseInfo : courses) {
+                    if (courseInfo.name == course) {
+                        courseInfo.numStudents--;
+                        if (courseInfo.numStudents == 0) {
+                            courses.erase(std::remove_if(courses.begin(), courses.end(), [&](const Course& c) {
+                                return c.name == course;
+                                }), courses.end());
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            std::cout << "Course: " << courseName << " not Deleted." << std::endl;
+        }
+
+    }
+    else {
+        std::cout << "Course with name " << courseName << " not found." << std::endl;
+    }
+}
+
+//add course
+void addCourse()
+{
+    system("cls");
+    std::string name;
+
+    std::cout << "Enter course name: ";
+    std::getline(std::cin, name);
+
+    // Check if course name already exists
+    auto it = std::find_if(courses.begin(), courses.end(), [&](const Course& c) {
+        return c.name == name;
+        });
+
+    if (it != courses.end()) {
+        std::cout << "Failed to add course. Course name already exists." << std::endl;
+        return;
+    }
+
+    courses.push_back({ name, 0});
+}
 
 // Main program execution
 int main() {
@@ -364,15 +456,17 @@ int main() {
         std::cout << "--------------------------" << std::endl;
         std::cout << "Student Information System\n" << std::endl;
         std::cout << "1. Add Student Details" << std::endl;
-        std::cout << "2. Delete Student\n" << std::endl;
-        std::cout << "3. Modify Student" << std::endl;
-        std::cout << "4. Modify Course\n" << std::endl;
-        std::cout << "5. Display Students" << std::endl;
-        std::cout << "6. Display Courses\n" << std::endl; 
-        std::cout << "7. Search Student" << std::endl;
-        std::cout << "8. Search Course\n" << std::endl;
-        std::cout << "9. Exit\n" << std::endl;
-        std::cout << "Enter your choice (1-9): ";
+        std::cout << "2. Add Course Details\n" << std::endl;
+        std::cout << "3. Delete Student" << std::endl;
+        std::cout << "4. Delete Course Details\n" << std::endl;
+        std::cout << "5. Modify Student" << std::endl;
+        std::cout << "6. Modify Course\n" << std::endl;
+        std::cout << "7. Display Students" << std::endl;
+        std::cout << "8. Display Courses\n" << std::endl; 
+        std::cout << "9. Search Student" << std::endl;
+        std::cout << "10. Search Course\n" << std::endl;
+        std::cout << "11. Exit\n" << std::endl;
+        std::cout << "Enter your choice (1-11): ";
 
         std::string choice;
         std::getline(std::cin, choice);
@@ -381,27 +475,33 @@ int main() {
             addStudent();
         }
         else if (choice == "2") {
-            deleteStudent();
+            addCourse();
         }
         else if (choice == "3") {
-            modifyStudent();
+            deleteStudent();
         }
         else if (choice == "4") {
-            modifyCourse();
+            deleteCourse();
         }
         else if (choice == "5") {
-            displayStudents();
+            modifyStudent();
         }
         else if (choice == "6") {
-            displayCourses(); 
+            modifyCourse();
         }
         else if (choice == "7") {
-            searchStudent();
+            displayStudents();
         }
         else if (choice == "8") {
-            searchCourse();
+            displayCourses(); 
         }
         else if (choice == "9") {
+            searchStudent();
+        }
+        else if (choice == "10") {
+            searchCourse();
+        }
+        else if (choice == "11") {
             break;
         }
         else {
